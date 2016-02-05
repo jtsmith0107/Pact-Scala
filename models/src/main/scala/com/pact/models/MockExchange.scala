@@ -1,4 +1,4 @@
-package org.rallyhealth.pact.models
+package com.pact.models
 
 /**
  * Abstraction for a full request response cycle that we expect to happen during a client test

@@ -1,6 +1,6 @@
 package com.pact.sbt.provider
 
-import org.rallyhealth.pact.models.Pact
+import com.pact.models.Pact
 
 
 /**

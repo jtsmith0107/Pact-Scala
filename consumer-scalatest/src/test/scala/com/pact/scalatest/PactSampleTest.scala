@@ -1,6 +1,6 @@
 package com.pact.scalatest
 
-import org.rallyhealth.pact.models.{MockedResponse, MockedRequest, MockedExchange}
+import com.pact.models.{MockedResponse, MockedRequest, MockedExchange}
 import org.scalatest.concurrent.ScalaFutures
 import dispatch._, Defaults._
 
@@ -33,7 +33,14 @@ class PactSampleTest extends PactSpec with ScalaFutures {
 class TestClient(baseUrl: String) {
   def makeARequest(path: String, body: Person) = {
     val path = "/path/to/cool"
-    val svc = url(baseUrl + path).setBody(s"{${body.name}, ${body.age}}").setHeaders(Map.empty).GET
+    val reqJson =
+      """
+        |{
+        | "name" : "bob,
+        | "age" : 21
+        |}
+      """.stripMargin
+    val svc = url(baseUrl + path).setBody(reqJson).setHeaders(Map.empty).GET
     Http(svc OK as.String)
   }
 }
