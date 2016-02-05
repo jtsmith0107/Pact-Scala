@@ -1,4 +1,4 @@
-package org.rallyhealth.pact.models
+package com.pact.models
 
 import scala.language.existentials
 
