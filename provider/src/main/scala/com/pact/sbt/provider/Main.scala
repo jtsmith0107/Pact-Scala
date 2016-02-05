@@ -1,4 +1,4 @@
-package org.rallyhealth.pact.provider
+package com.pact.sbt.provider
 
 class Main {
 

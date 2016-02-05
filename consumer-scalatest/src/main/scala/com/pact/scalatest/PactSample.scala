@@ -19,7 +19,6 @@ trait HasProviderConfig {
 
 
 trait PactSpec extends FlatSpec with PactBehaviors with HasPactDslProvider with HasProviderConfig {
-  import PactFormats._
   /**
    *
    * @param description Test description, gets written into the pact file as the identifier of the test
@@ -56,9 +55,7 @@ trait PactSpec extends FlatSpec with PactBehaviors with HasPactDslProvider with 
       .path(req.path)
       .method(req.httpMethod)
       .headers(new java.util.HashMap[String, String]())
-      .body(parser) // TODO make not play-json specific
-      // TODO allow mock exchange to accept converter into pactDSLJson body
-      // ^^ could be done with a macro very similar to play-jsons writer
+      .body(parser)
       .willRespondWith()
       .status(200)
       .headers(new java.util.HashMap[String, String]()).body(resp.body.toString).toFragment

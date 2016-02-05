@@ -1,4 +1,4 @@
-package org.rallyhealth.pact.provider
+package com.pact.sbt.provider
 
 case class Address(protocol: String, host: String, port: Int = 80, path: String = "") {
 
