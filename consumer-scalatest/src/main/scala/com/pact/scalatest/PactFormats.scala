@@ -8,11 +8,11 @@ import ru._
 /**
  * Type mapper to provide conversions of types to a [[PactDslJsonBody]] for writing contracts for request bodies
  */
-trait PactFormats[-A] {
+trait PactFormats[A] {
   def addTo(builder: PactDslJsonBody, name: String): PactDslJsonBody
 }
 
-trait OPactFormats[-A] extends PactFormats[A] {
+trait OPactFormats[A] extends PactFormats[A] {
 
   def asRoot(builder: PactDslJsonBody): DslPart
 
@@ -33,9 +33,10 @@ object PactFormats {
   def apply[A: TypeTag](implicit fjs: PactFormats[A]): DslPart = {
     val builder = new PactDslJsonBody()
     fjs match {
-      case StringPactFormat =>
-//        val x = implicitly[OPactFormats[A]]
-        PactDslJsonRootValue.stringType()
+      case StringPactFormat => PactDslJsonRootValue.stringType()
+      case BooleanPactFormat => PactDslJsonRootValue.booleanType()
+      case IntPactFormat => PactDslJsonRootValue.integerType()
+      case LongPactFormat => PactDslJsonRootValue.integerType()
       case x: OPactFormats[A] => x.asRoot(builder)
       case _ =>
         throw new IllegalStateException()
@@ -59,6 +60,13 @@ object PactFormats {
   }
 
   implicit object IntPactFormat extends PactFormats[Int] {
+
+    override def addTo(builder: PactDslJsonBody, name: String): PactDslJsonBody = {
+      builder.integerType(name)
+    }
+  }
+
+  implicit object LongPactFormat extends PactFormats[Long] {
 
     override def addTo(builder: PactDslJsonBody, name: String): PactDslJsonBody = {
       builder.integerType(name)

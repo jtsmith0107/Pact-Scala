@@ -68,19 +68,6 @@ val provider = project.in(file("provider"))
     )
   ).dependsOn(models % "compile->compile;test->test")
 
-/**
- * Consumer is the logic that provides a method for writing tests
- */
-val consumer = project.in(file("consumer"))
-  .settings(baseSettings ++ commonRootSettings: _*)
-  .settings(
-    name := "consumer",
-    libraryDependencies ++= Seq(
-      Dependencies.scalaTest
-    )
-  ).dependsOn(models)
-  .enablePlugins(play.PlayScala, BuildInfoPlugin)
-
 val pactVerifierPlugin = project.in(file("pact-verifier-plugin"))
   .settings(baseSettings ++: commonRootSettings: _*)
   .settings(sbtPlugin := true)

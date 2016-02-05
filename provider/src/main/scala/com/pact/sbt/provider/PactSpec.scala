@@ -1,4 +1,4 @@
-package org.rallyhealth.pact.provider
+package com.pact.sbt.provider
 
 import org.rallyhealth.pact.models.Pact
 
