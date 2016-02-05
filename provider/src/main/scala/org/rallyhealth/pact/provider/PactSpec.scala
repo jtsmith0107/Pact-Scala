@@ -1,10 +1,6 @@
 package org.rallyhealth.pact.provider
 
-import org.rallyhealth.pact.models.{PactResponse, Pact}
-import org.scalatest.FreeSpec
-import org.scalatest.exceptions.TestFailedException
-
-import scala.concurrent.{Await, Future}
+import org.rallyhealth.pact.models.Pact
 
 
 /**
@@ -12,7 +8,7 @@ import scala.concurrent.{Await, Future}
  * @param configuration Service/Provider Environment to verify against
  * @param pact The parsed Pact provided by json files
  */
-class PactSpec(configuration: PactConfiguration, pact: Pact) extends FreeSpec {
+class PactSpec(configuration: PactConfiguration, pact: Pact)  {
 
 
 //  pact.interactions.toList.map { interaction =>
@@ -39,5 +35,5 @@ class PactSpec(configuration: PactConfiguration, pact: Pact) extends FreeSpec {
       //      if (!responseMismatches.isEmpty) {
 //      throw new TestFailedException(s"There were response mismatches: \n${responseMismatches.mkString("\n")}", 10)
 //    }
-  }
+
 }

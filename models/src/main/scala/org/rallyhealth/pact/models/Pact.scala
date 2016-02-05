@@ -1,60 +1,54 @@
 package org.rallyhealth.pact.models
 
-import play.api.libs.json.Json
+import scala.language.existentials
 
-case class Pact(provider: Provider, consumer: Consumer, interactions: Seq[Interaction])
-
-object Pact {
-
-  implicit val format = Json.format[Pact]
-}
+/**
+ * Complete json model for a pact file
+ * @param provider Provider versioning info
+ * @param consumer Consumer versioning info
+ * @param interactions List of interactions that are generated and tested against.
+ */
+case class Pact(provider: Provider, consumer: Consumer, interactions: Seq[Interaction], metaData: MetaData)
 
 case class Provider(name: String)
 
-object Provider {
-
-  implicit val format = Json.format[Provider]
-}
-
 case class Consumer(name: String)
 
-object Consumer {
-
-  implicit val format = Json.format[Consumer]
-}
-
+/**
+ * The basic building block of a pact. Each interaction represents a single test in the consumer dsl, and translates
+ * @param providerState Signals to the provider to setup specific state before an interaction needs to be tested.
+ * @param description Test title to be tracked between provider/consumer
+ * @param request Real request for consumer, mocked request for provider test
+ * @param response Mocked response for consumer test. Actual service response for provider test.
+ */
 case class Interaction(
-  description: String,
   providerState: Option[String],
-  request: PactRequest,
-  response: PactResponse
+  description: String,
+  request: PactRequest[_],
+  response: PactResponse[_]
   )
 
-object Interaction {
-
-  implicit val format = Json.format[Interaction]
-}
-
-case class PactRequest(
+/**
+ * Full representation of HTTP request.
+ */
+case class PactRequest[Body](
   method: String,
   path: String,
   query: Option[String],
-  headers: Option[Map[String, String]],
-  body: Option[String]
+  headers: Map[String, String],
+  body: Body
   )
 
-object PactRequest {
-
-  implicit val format = Json.format[PactRequest]
-}
-
-case class PactResponse(
+/**
+ * Full representation of HTTP response
+ */
+case class PactResponse[Body](
   status: Int = 200,
-  headers: Option[Map[String, String]],
-  body: Option[String]
+  headers: Map[String, String],
+  body: Body
   )
 
-object PactResponse {
-
-  implicit val format = Json.format[PactResponse]
-}
+/**
+ * Contains data on the specific pact library used to publish the pact
+ */
+case class MetaData(pactScalaVersion: String)
